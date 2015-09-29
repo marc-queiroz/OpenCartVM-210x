@@ -100,6 +100,6 @@ Vagrant.configure(2) do |config|
 
     # Cleanup
     sudo rm -r -f /var/www/opencart/upload/install
-    sudo rm -r -f /tmp/*
+    sudo rm -r -f /tmp/opencart* /tmp/vqmod* /tmp/*.zip
   SHELL
 end
