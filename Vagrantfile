@@ -24,6 +24,7 @@ Vagrant.configure(2) do |config|
   # script.  For more info see https://github.com/fgrehm/vagrant-cachier
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
+    config.cache.enable :generic, { :cache_dir => "/tmp/cache/wget" }
   end
   
   # Create a forwarded port mapping which allows access to a specific port
@@ -69,14 +70,14 @@ Vagrant.configure(2) do |config|
     sudo mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS opencart;"
 
     # OpenCart 2.1.0.0
-    sudo wget -q https://github.com/opencart/opencart/archive/2.1.0.0.zip -P "/tmp"
-    sudo unzip -o /tmp/2.1.0.0.zip -d /tmp
+    sudo wget -q -nc https://github.com/opencart/opencart/archive/2.1.0.0.zip -P "/tmp/cache/wget"
+    sudo unzip -o /tmp/cache/wget/2.1.0.0.zip -d /tmp
     sudo rsync -a --ignore-existing --remove-source-files --exclude=config-dist.php /tmp/opencart-2.1.0.0/upload/ /var/www/opencart/upload/
     sudo php /var/www/opencart/upload/install/cli_install.php install --db_hostname localhost --db_username root --db_password root --db_database opencart --db_driver mysqli --username #{$admin_user} --password #{$admin_password} --email #{$admin_email} --http_server http://#{$ip}/
 
     # vQmod
-    sudo wget -q https://github.com/vqmod/vqmod/releases/download/v2.5.1-opencart.zip/vqmod-2.5.1-opencart.zip -P "/tmp"
-    sudo unzip -o /tmp/vqmod-2.5.1-opencart.zip -d /tmp
+    sudo wget -q -nc https://github.com/vqmod/vqmod/releases/download/v2.5.1-opencart.zip/vqmod-2.5.1-opencart.zip -P "/tmp/cache/wget"
+    sudo unzip -o /tmp/cache/wget/vqmod-2.5.1-opencart.zip -d /tmp
     sudo rsync -a --ignore-existing --remove-source-files /tmp/vqmod /var/www/opencart/upload/
     sudo php /var/www/opencart/upload/vqmod/install/index.php
 
