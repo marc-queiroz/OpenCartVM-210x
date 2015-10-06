@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$ip = "192.168.21.00"
+$ip = "192.168.21.01"
 $idekey = "PHPSTORM"
 $admin_user = "admin"
 $admin_password = "admin"
@@ -69,10 +69,10 @@ Vagrant.configure(2) do |config|
     # Database
     sudo mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS opencart;"
 
-    # OpenCart 2.1.0.0
-    sudo wget -q -nc https://github.com/opencart/opencart/archive/2.1.0.0.zip -P "/tmp/cache/wget"
-    sudo unzip -o /tmp/cache/wget/2.1.0.0.zip -d /tmp
-    sudo rsync -a --ignore-existing --remove-source-files --exclude=config-dist.php /tmp/opencart-2.1.0.0/upload/ /var/www/opencart/upload/
+    # OpenCart 2.1.0.1
+    sudo wget -q -nc https://github.com/opencart/opencart/archive/2.1.0.1.zip -P "/tmp/cache/wget"
+    sudo unzip -o /tmp/cache/wget/2.1.0.1.zip -d /tmp
+    sudo rsync -a --ignore-existing --remove-source-files --exclude=config-dist.php /tmp/opencart-2.1.0.1/upload/ /var/www/opencart/upload/
     sudo php /var/www/opencart/upload/install/cli_install.php install --db_hostname localhost --db_username root --db_password root --db_database opencart --db_driver mysqli --username #{$admin_user} --password #{$admin_password} --email #{$admin_email} --http_server http://#{$ip}/
 
     # vQmod
